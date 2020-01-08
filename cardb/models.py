@@ -3,12 +3,19 @@ from django.contrib.auth.models import User
 from datetime import date
 
 
+class Bodystyle(models.Model):
+    name = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+
 class Car(models.Model):
     name = models.TextField()
     make = models.TextField()
     years = models.TextField(blank=True, null=True)
     trims = models.TextField(blank=True, null=True)
-    bodystyles = models.TextField(blank=True, null=True)
+    bodystyles = models.ForeignKey(Bodystyle, blank=True, null=True, on_delete=models.PROTECT)
     url = models.URLField(blank=True, null=True)
     user = models.ForeignKey(User, default=1, on_delete=models.PROTECT)
     date = models.DateField(default=date.today)
@@ -22,13 +29,12 @@ class Car(models.Model):
 
 class Listing(models.Model):
     name = models.TextField()
+    uniqueID = models.TextField()
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField('USD', max_digits=15, decimal_places=2)
     user = models.ForeignKey(User, default=1, on_delete=models.PROTECT)
     date = models.DateField(default=date.today)
-    city = models.TextField(default="")
-    url = models.URLField(blank=True, null=True)
-    link = models.URLField(blank=True, null=True)
+    link = models.URLField()
     stateOrProvince = models.TextField(blank=True, null=True)
     mileage = models.IntegerField(blank=True, null=True)
     year = models.IntegerField(blank=True, null=True)
@@ -40,17 +46,6 @@ class Listing(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.name
-
-
-class Review(models.Model):
-    RATING_CHOICES = ((1, 'one'), (2, 'two'), (3, 'three'), (4, 'four'), (5, 'five'))
-    rating = models.PositiveSmallIntegerField('Rating (stars)', blank=False, default=3, choices=RATING_CHOICES)
-    comment = models.TextField(blank=True, null=True)
-    user = models.ForeignKey(User, default=1, on_delete=models.PROTECT)
-    date = models.DateField(default=date.today)
-
-    class Meta:
-        abstract = True
 
 
 
