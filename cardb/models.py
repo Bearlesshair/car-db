@@ -1,3 +1,4 @@
+from djmoney.models.fields import MoneyField
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import date
@@ -19,6 +20,7 @@ class Car(models.Model):
     url = models.URLField(blank=True, null=True)
     user = models.ForeignKey(User, default=1, on_delete=models.PROTECT)
     date = models.DateField(default=date.today)
+    _craigslist_searchterm = models.TextField()
 
     def __unicode__(self):
         return u"%s" % self.name
@@ -29,13 +31,12 @@ class Car(models.Model):
 
 class Listing(models.Model):
     name = models.TextField()
-    uniqueID = models.TextField()
     description = models.TextField(blank=True, null=True)
-    price = models.DecimalField('USD', max_digits=15, decimal_places=2)
+    price = MoneyField(max_digits=15, decimal_places=2, default_currency='USD')
     user = models.ForeignKey(User, default=1, on_delete=models.PROTECT)
-    date = models.DateField(default=date.today)
+    date = models.DateTimeField(default=date.today)
     link = models.URLField()
-    stateOrProvince = models.TextField(blank=True, null=True)
+    region = models.TextField(blank=True, null=True)
     mileage = models.IntegerField(blank=True, null=True)
     year = models.IntegerField(blank=True, null=True)
     engine = models.TextField(blank=True, null=True)
@@ -46,6 +47,9 @@ class Listing(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.name
+
+    def __str__(self):
+        return self.name
 
 
 
