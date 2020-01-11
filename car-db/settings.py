@@ -133,7 +133,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Makassar'
 CELERY_BEAT_SCHEDULE = {
     'task-number-one': {
-        'task': 'cardb.tasks.some_task',
-        'schedule': crontab(minute='*/30'),
+        'task': 'cardb.tasks.run_scraping',
+        'schedule': crontab(minute=8, hour='*/1'),
     },
  }
