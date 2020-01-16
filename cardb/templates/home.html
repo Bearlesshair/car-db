@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <div>
+      <h1>CarDB Home</h1>
+      <p>Welcome to CarDB!</p>
+      <h2>Dynamic content</h2>
+      <p>The cardb has the following record counts:</p>
+      <ul>
+        <li><strong>Cars:</strong> {{ num_cars }}</li>
+        <li><strong>Listings:</strong> {{ num_listings }}</li>
+      </ul>
+    </div>
+
+{% endblock %}

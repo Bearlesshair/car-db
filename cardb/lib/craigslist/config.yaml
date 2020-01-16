@@ -1,0 +1,42 @@
+# Search query
+query: ""
+
+# Cities/Regions to query
+cities:
+- denver
+- eauclaire
+- portland
+- grandisland
+- bismarck
+- chambana
+- joplin
+- muskegon
+- zanesville
+- nashville
+- pennstate
+- rochester
+- butte
+- jackson
+- columbusga
+- lynchburg
+- houston
+- odessa
+- delaware
+- fayetteville
+- showlow
+- provo
+- worcester
+- susanville
+- orlando
+- ventura
+
+min_price:
+max_price:
+
+
+
+# Options to send email with spreadsheet
+sendemail: False
+botuser: 'bikescraperbot'
+botpassword: 'Toastisgood007'
+toemail: 'ncflorentius@gmail.com'

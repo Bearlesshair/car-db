@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% load plotly_dash %}
+  <h1>Name: {{ car.name }}</h1>
+
+  <p><strong>Make:</strong> <a href="">{{ car.make }}</a></p> <!-- author detail link not yet defined -->
+  <p class="card-header"><strong>Years:</strong> {{ car.start_year }} - {{  car.end_year }}</p>
+  <div class="card"<p><strong>Price stats:</strong>{{ price_stats }}</p></div>
+  <div class="{% plotly_class name='Scatterplot' %} card" style="height: 100%; width: 100%">
+    {% plotly_app name='Scatterplot' ratio=0.65 %}
+  </div>
+
+  </div>
+{% endblock %}
