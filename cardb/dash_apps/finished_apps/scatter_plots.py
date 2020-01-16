@@ -7,10 +7,6 @@ from cardb.models import Listing
 import pandas as pd
 
 
-def money_to_float(x):
-    return float(x)
-
-
 df = pd.DataFrame(list(Listing.objects.filter(car=4).values()))
 drop_A=df.index[df["price"] == 0].tolist()
 # drop_B=df.index[df["mileage"] == 0].tolist()
@@ -33,16 +29,29 @@ app.layout = html.Div(
                 for d in dimensions
             ],
             style={"width": "25%", "float": "left"},
+
         ),
         dcc.Graph(id="graph", style={"width": "75%", "display": "inline-block"}),
+        dcc.RangeSlider(
+            id='slider-year',
+            min=df['year'].min(),
+            max=df['year'].max(),
+            value=[df['year'].min(), df['year'].max()],
+            marks={str(year): str(year) for year in df['year'].unique()},
+            step=None,
+        )
+
     ]
 )
 
+inputs = [Input(d, "value") for d in dimensions] + [Input('slider-year', 'value')]
 
-@app.callback(Output("graph", "figure"), [Input(d, "value") for d in dimensions])
-def make_figure(x, y, color, facet_col, facet_row):
+
+@app.callback(Output("graph", "figure"), inputs)
+def make_figure(x, y, color, facet_col, facet_row, year_range):
+    new_df = df.loc[df.index[df['year'].between(year_range[0], year_range[1], inclusive=True)].tolist(),:]
     return px.scatter(
-        df,
+        new_df,
         x=x,
         y=y,
         color=color,
